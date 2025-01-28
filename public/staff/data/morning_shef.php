@@ -508,7 +508,7 @@
             // When the document has loaded pull in the page header and footer skins
             $(document).ready(function () {
                 // Change the v= to a different number to force clearing the cached version on the client browser
-                $('#header').load('../../../../../templates/DISTRICT.header.php?app=True');
+                $('#header').load('../../../../../templates/INTERNAL.header.php?app=True');
 				$('#sidebar').load('../../../../../templates/INTERNAL.sidebar.php?app=True');
                 $('#footer').load('../../../../../templates/INTERNAL.footer.php?app=True');
             })
