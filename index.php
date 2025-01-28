@@ -3,7 +3,7 @@
 
 <?php
 require_once('private/initialize.php');
-require_login();
+// require_login();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="box-content" style="background-color:white;margin:auto">
                                 <div class="content">
                                     <!-- PHP -->
-                                    <div id="spinner"><img src="spinner.gif" width="100" height="100" /></div>
+                                    <div id="spinner"><img src="images/loading4.gif" width="100" height="100" /></div>
                                     <div id="preview"></div>
                                     <form method="post" target="_blank" onsubmit="hideSubmitButton()">
                                         <label for="ld24_text_input">: LD24: </label>
@@ -120,6 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <br>
                                         <input type="submit" value="Submit" id="submitButton">
                                     </form>
+                                    <script src='morning_shef.js'></script>
 
                                     <!-- JS -->
                                     <!-- <div id="loading_morning_shef" style="display: none;"><img
@@ -151,4 +152,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+
 <?php db_disconnect($db); ?>
