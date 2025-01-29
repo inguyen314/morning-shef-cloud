@@ -131,7 +131,8 @@ $line_ldmp_tw = ".ER {$location_ldmp_tw} {$date_plus_one_day} Z DH1200/HTIF/DID1
 |--------------------------------------------------------------------------
 */
 // Set Lake Title
-$lake_forecast_title_1 = ": TODAYS LAKE FLOW AND 5 DAY FORECAST (6AM INSTANTANEOUS FORECAST VALUE)";
+$lake_forecast_title_1 = ": TODAYS LAKE FLOW (6AM INSTANTANEOUS VALUE)";
+$lake_forecast_title_3 = ": 5 DAYS LAKE FORECAST (6AM INSTANTANEOUS FORECAST VALUE)";
 $lake_forecast_title_2  = ".B STL " . $date_md . " C DH0600/DC" . $date_md . "0700/QT/DRD+1/QTIF/DRD+2/QTIF/DRD+3/QTIF/DRD+4/QTIF/DRD+5/QTIF";
 
 // Get Carlyle Data
@@ -160,9 +161,12 @@ foreach ($carlyle_forecast as $carlyle) {
         $carlyle_lake_value[] = $carlyle->lake;
     }
 }
-// Print all outflow values separated by forward slashes
-$line_carlyle = $carlyle_station_value[0] . " " . implode('/', $carlyle_outflow_values) . " : " . $carlyle_lake_value[0];
 
+$carlyle_today_outflow_value = $carlyle_outflow_values[0];
+$carlyle_forecast_outflow_values = array_slice($carlyle_outflow_values, 1);
+// Print all outflow values separated by forward slashes
+$line_carlyle = ".ER " . $carlyle_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $carlyle_today_outflow_value;
+$line_carlyle_2 = ".ER " . $carlyle_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $carlyle_forecast_outflow_values);
 // Get Shelbyville Data
 $shelbyville_forecast = get_shelbyville_forecast($db);
 $allOutflowsNotNullShelbyville = true;
@@ -190,8 +194,12 @@ foreach ($shelbyville_forecast as $shelbyville) {
         $shelbyville_lake_value[] = $shelbyville->lake;
     }
 }
+
+$shelbyville_today_outflow_value = $shelbyville_outflow_values[0];
+$shelbyville_forecast_outflow_values = array_slice($shelbyville_outflow_values, 1);
 // Print all outflow values separated by forward slashes
-$line_shelbyville = $shelbyville_station_value[0] . " " . implode('/', $shelbyville_outflow_values) . " : " . $shelbyville_lake_value[0];
+$line_shelbyville = ".ER " . $shelbyville_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $shelbyville_today_outflow_value;
+$line_shelbyville_2 = ".ER " . $shelbyville_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $shelbyville_forecast_outflow_values);
 
 // Get Wappapello
 $wappapello_forecast = get_wappapello_forecast($db);
@@ -218,8 +226,12 @@ foreach ($wappapello_forecast as $wappapello) {
         $wappapello_lake_value[] = $wappapello->lake;
     }
 }
+
+$wappapello_today_outflow_value = $wappapello_outflow_values[0];
+$wappapello_forecast_outflow_values = array_slice($wappapello_outflow_values, 1);
 // Print all outflow values separated by forward slashes
-$line_wappapello = $wappapello_station_value[0] . " " . implode('/', $wappapello_outflow_values) . " : " . $wappapello_lake_value[0];
+$line_wappapello = ".ER " . $wappapello_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $wappapello_today_outflow_value;
+$line_wappapello_2 = ".ER " . $wappapello_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $wappapello_forecast_outflow_values);
 
 // Get Rend
 $rend_forecast = get_rend_forecast($db);
@@ -246,8 +258,12 @@ foreach ($rend_forecast as $rend) {
         $rend_lake_value[] = $rend->lake;
     }
 }
+
+$rend_today_outflow_value = $rend_outflow_values[0];
+$rend_forecast_outflow_values = array_slice($rend_outflow_values, 1);
 // Print all outflow values separated by forward slashes
-$line_rend = $rend_station_value[0] . " " . implode('/', $rend_outflow_values) . " : " . $rend_lake_value[0];
+$line_rend = ".ER " . $rend_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $rend_today_outflow_value;
+$line_rend_2 = ".ER " . $rend_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $rend_forecast_outflow_values);
 
 
 /*
@@ -356,6 +372,8 @@ if ($preview == "True") {
     // print_r($end);
     echo "<br>";
     echo "<br>";
+    echo "<br>";
+    echo "<br>";
 }
 
 /*
@@ -366,17 +384,28 @@ if ($preview == "True") {
 if ($preview == "True") {
     print_r($lake_forecast_title_1);
     echo "<br>";
-    print_r($lake_forecast_title_2);
+    print_r($lake_forecast_title_3);
     echo "<br>";
+    echo "<br>";
+    // print_r($lake_forecast_title_2);
+    // echo "<br>";
     print_r($line_carlyle);
+    echo "<br>";
+    print_r($line_carlyle_2);
     echo "<br>";
     print_r($line_shelbyville);
     echo "<br>";
+    print_r($line_shelbyville_2);
+    echo "<br>";
     print_r($line_wappapello);
+    echo "<br>";
+    print_r($line_wappapello_2);
     echo "<br>";
     print_r($line_rend);
     echo "<br>";
-    print_r($end);
+    print_r($line_rend_2);
+    // echo "<br>";
+    // print_r($end);
     echo "<br>";
     echo "<br>";
     print_r($lake_forecast_marktwain_title_1);
