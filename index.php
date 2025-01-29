@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userMarkTwainInput = $_POST["marktwain_user_input"];
     $userWappapelloInput = $_POST["wappapello_user_input"];
     $userRendInput = $_POST["rend_user_input"];
-    redirect_to(url_for('staff/data/morning_shef_data.php?preview=False&userLD24Input=' . $userLD24Input . '&userLD25Input=' . $userLD25Input . '&userMelPriceInput=' . $userMelPriceInput . '&userCarlyleInput=' . $userCarlyleInput . '&userShelbyvilleInput=' . $userShelbyvilleInput . '&userMarkTwainInput=' . $userMarkTwainInput . '&userWappapelloInput=' . $userWappapelloInput . '&userRendInput=' . $userRendInput . ''));
+    redirect_to(url_for('morning_shef_data.php?preview=False&userLD24Input=' . $userLD24Input . '&userLD25Input=' . $userLD25Input . '&userMelPriceInput=' . $userMelPriceInput . '&userCarlyleInput=' . $userCarlyleInput . '&userShelbyvilleInput=' . $userShelbyvilleInput . '&userMarkTwainInput=' . $userMarkTwainInput . '&userWappapelloInput=' . $userWappapelloInput . '&userRendInput=' . $userRendInput . ''));
 }
 ?>
 
@@ -77,16 +77,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div id="topPane" class="col-md backend-cp-collapsible">
                         <div class="box-usace">
                             <h2 class="box-header-striped">
-                                <span class="titleLabel title">Morning Shef</span>
+                                <span class="titleLabel title">NWS Morning Shef</span>
                                 <span class="rss"></span>
                             </h2>
                             <div class="box-content" style="background-color:white;margin:auto">
                                 <div class="content">
                                     <!-- PHP -->
-                                    <div id="spinner"><img src="images/loading4.gif" width="100" height="100" /></div>
+                                    <div id="spinner"><img src="images/loading4.gif"
+                                            style='height: 50px; width: 50px;' alt="Loading..." /></div>
                                     <div id="preview"></div>
                                     <form method="post" target="_blank" onsubmit="hideSubmitButton()">
-                                        <label for="ld24_text_input">: LD24: </label>
+                                        <!-- <label for="ld24_text_input">: LD24: </label>
                                         <input type="text" id="ld24_text_input" name="ld24_user_input" value="Nothing to Report">
                                         <br>
                                         <br>
@@ -117,17 +118,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <label for="rend_text_input">: REND: </label>
                                         <input type="text" id="rend_text_input" name="rend_user_input" value="Nothing to Report">
                                         <br>
-                                        <br>
+                                        <br> -->
                                         <input type="submit" value="Submit" id="submitButton">
                                     </form>
                                     <script src='morning_shef.js'></script>
-
-                                    <!-- JS -->
-                                    <!-- <div id="loading_morning_shef" style="display: none;"><img
-                                            src="images/loading4.gif"
-                                            style='height: 50px; width: 50px;' alt="Loading..." /></div>
-                                    <div id="table_container_morning_shef"></div>
-                                    <script src='morning_shef.js'></script> -->
                                 </div>
                             </div>
                         </div>

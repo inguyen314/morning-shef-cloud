@@ -1,15 +1,15 @@
 window.onload = function () {
-    getDataLD24();
-    getDataLD25();
-    getDataLDMP();
-    getDataCarlyle();
-    getDataShelbyville();
-    getDataMarkTwain();
-    getDataWappapello();
-    getDataRend();
+    // getDataLD24();
+    // getDataLD25();
+    // getDataLDMP();
+    // getDataCarlyle();
+    // getDataShelbyville();
+    // getDataMarkTwain();
+    // getDataWappapello();
+    // getDataRend();
 };
 
-replaceText();
+getPreviewShef();
 
 function showSpinner() {
     var spinner = document.getElementById("spinner");
@@ -27,6 +27,27 @@ function hideSubmitButton() {
 
     // Hide the submit button
     submitButton.style.display = "none";
+}
+
+function getPreviewShef() {
+    showSpinner();
+    var target = document.getElementById("preview");
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'morning_shef_data.php?preview=True', true);
+    xhr.onreadystatechange = function () {
+        console.log('readyState: ' + xhr.readyState);
+        if (xhr.readyState == 4) {
+            hideSpinner(); // Hide spinner when the request is complete
+
+            if (xhr.status == 200) {
+                target.innerHTML = xhr.responseText;
+            } else {
+                // Handle error cases here if needed
+                console.error('Error loading data. Status: ' + xhr.status);
+            }
+        }
+    }
+    xhr.send();
 }
 
 function getDataLD24() {
@@ -337,26 +358,5 @@ function getDataRend() {
         }
     };
     xhr.open('GET', 'get_rend.php', true);
-    xhr.send();
-}
-
-function replaceText() {
-    showSpinner();
-    var target = document.getElementById("preview");
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'morning_shef_data.php?preview=True', true);
-    xhr.onreadystatechange = function () {
-        console.log('readyState: ' + xhr.readyState);
-        if (xhr.readyState == 4) {
-            hideSpinner(); // Hide spinner when the request is complete
-
-            if (xhr.status == 200) {
-                target.innerHTML = xhr.responseText;
-            } else {
-                // Handle error cases here if needed
-                console.error('Error loading data. Status: ' + xhr.status);
-            }
-        }
-    }
     xhr.send();
 }
