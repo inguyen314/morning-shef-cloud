@@ -16,11 +16,8 @@ if (ini_get('date.timezone')) {
     //echo 'date.timezone: ' . ini_get('date.timezone');
 }
 
-
 $find_mark_twain = get_crest_forecast_mark_twain($db);
 echo json_encode($find_mark_twain);
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 db_disconnect($db);
 ?>

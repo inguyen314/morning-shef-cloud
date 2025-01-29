@@ -114,40 +114,6 @@ $line_ldmp_tw = "{$location_ldmp_tw}  {$values_ldmp_tw}";
 
 /*
 |--------------------------------------------------------------------------
-| PREVIEW LD DATA
-|--------------------------------------------------------------------------
-*/
-if ($preview == "True") {
-    print_r($ld_forecast_title_1);
-    echo "<br>";
-    print_r($ld_forecast_title_2);
-    echo "<br>";
-    print_r($line_ld24_pool);
-    echo "<br>";
-    print_r($line_ld25_pool);
-    echo "<br>";
-    print_r($line_ldmp_pool);
-    echo "<br>";
-    print_r($end);
-    echo "<br>";
-    echo "<br>";
-    print_r($ld_tw_forecast_title_1);
-    echo "<br>";
-    print_r($ld_tw_forecast_title_2);
-    echo "<br>";
-    print_r($line_ld24_tw);
-    echo "<br>";
-    print_r($line_ld25_tw);
-    echo "<br>";
-    print_r($line_ldmp_tw);
-    echo "<br>";
-    print_r($end);
-    echo "<br>";
-    echo "<br>";
-}
-
-/*
-|--------------------------------------------------------------------------
 | GET LAKE FORECAST DATA
 |--------------------------------------------------------------------------
 */
@@ -331,6 +297,39 @@ $lake_forecast_marktwain_yesterday_title_2  = ".E CDAM7 " . $date_md . " C DH000
 $lake_note_title = ": CEMVS RESERVOIR NOTES";
 $ld_note_title = ": CEMVS LD NOTES";
 
+/*
+|--------------------------------------------------------------------------
+| PREVIEW LD DATA
+|--------------------------------------------------------------------------
+*/
+if ($preview == "True") {
+    print_r($ld_forecast_title_1);
+    echo "<br>";
+    print_r($ld_forecast_title_2);
+    echo "<br>";
+    print_r($line_ld24_pool);
+    echo "<br>";
+    print_r($line_ld25_pool);
+    echo "<br>";
+    print_r($line_ldmp_pool);
+    echo "<br>";
+    print_r($end);
+    echo "<br>";
+    echo "<br>";
+    print_r($ld_tw_forecast_title_1);
+    echo "<br>";
+    print_r($ld_tw_forecast_title_2);
+    echo "<br>";
+    print_r($line_ld24_tw);
+    echo "<br>";
+    print_r($line_ld25_tw);
+    echo "<br>";
+    print_r($line_ldmp_tw);
+    echo "<br>";
+    print_r($end);
+    echo "<br>";
+    echo "<br>";
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -429,11 +428,11 @@ if ($preview == "False") {
     |--------------------------------------------------------------------------
     */
     // Specify the file path where you want to export the data
-    $filename = "morning_shef.shef";
-    //$filename = "morning_shef_test.shef"; // for testing purposes
+    // $filename = "morning_shef.shef";
+    $filename = "morning_shef_test.shef"; // for testing purposes
 
-    $filename_date_time = "morning_shef" . $date_Ymd . ".shef";
-    //$filename_date_time = "morning_shef_test".$date_Ymd.".shef";
+    // $filename_date_time = "morning_shef" . $date_Ymd . ".shef";
+    $filename_date_time = "morning_shef_test".$date_Ymd.".shef";
 
     // Open the file for writing
     $fileHandle = fopen($filename, 'w');
@@ -453,8 +452,8 @@ if ($preview == "False") {
     // View Morning Shef
     echo "<p>" . "<a href='" . $filename . "' target='_blank'>" . "View Morning Shef" . "</a>" . "</p>";
 
-    $to = "ivan.h.nguyen@usace.army.mil,allen.phillips@usace.army.mil,DLL-CEMVS-WATER-MANAGERS@usace.army.mil"; // Replace with the recipient's email address
-    //$to = "ivan.h.nguyen@usace.army.mil";
+    // $to = "ivan.h.nguyen@usace.army.mil,allen.phillips@usace.army.mil,DLL-CEMVS-WATER-MANAGERS@usace.army.mil"; // Replace with the recipient's email address
+    $to = "ivan.h.nguyen@usace.army.mil";
     $subject = "MVS PHP Morning Shef Sent to NWS" .  " " . $date_Ymd;
     $message = $combinedData;
 
@@ -494,7 +493,7 @@ if ($preview == "False") {
 
     // PUBLIC VERIFY LINK
     echo "<p>";
-    echo "<a href='https://www.mvs-wc.usace.army.mil/morning_shef.shef.txt' target='_blank'>";
+    echo "<a href='https://www.mvs-wc.usace.army.mil/morning_shef_test.shef.txt' target='_blank'>";
     echo "View Morning Shef Public";
     echo "</a>";
     echo "</p>";

@@ -16,11 +16,8 @@ if (ini_get('date.timezone')) {
     //echo 'date.timezone: ' . ini_get('date.timezone');
 }
 
-
 $find_shelbyville = get_crest_forecast_shelbyville($db);
 echo json_encode($find_shelbyville);
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 db_disconnect($db);
 ?>

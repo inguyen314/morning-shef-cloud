@@ -16,13 +16,8 @@ if (ini_get('date.timezone')) {
     //echo 'date.timezone: ' . ini_get('date.timezone');
 }
 
-
-
-
 $find_mp = get_roller_tainter_mp($db);
 echo json_encode($find_mp);
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 db_disconnect($db);
 ?>

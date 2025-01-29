@@ -16,11 +16,8 @@ if (ini_get('date.timezone')) {
     //echo 'date.timezone: ' . ini_get('date.timezone');
 }
 
-
 $find_rend = get_crest_forecast_rend($db);
 echo json_encode($find_rend);
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 db_disconnect($db);
 ?>

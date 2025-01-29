@@ -1,14 +1,15 @@
 window.onload = function () {
-    // getDataLD24();
-    // getDataLD25();
-    // getDataLDMP();
-    // getDataCarlyle();
-    // getDataShelbyville();
-    // getDataMarkTwain();
-    // getDataWappapello();
-    // getDataRend();
+    getDataLD24();
+    getDataLD25();
+    getDataLDMP();
+    getDataCarlyle();
+    getDataShelbyville();
+    getDataMarkTwain();
+    getDataWappapello();
+    getDataRend();
 };
 
+console.log("Calling getPreviewShef");
 getPreviewShef();
 
 function showSpinner() {
@@ -35,7 +36,7 @@ function getPreviewShef() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'morning_shef_data.php?preview=True', true);
     xhr.onreadystatechange = function () {
-        console.log('readyState: ' + xhr.readyState);
+        // console.log('readyState: ' + xhr.readyState);
         if (xhr.readyState == 4) {
             hideSpinner(); // Hide spinner when the request is complete
 

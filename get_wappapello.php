@@ -16,11 +16,8 @@ if (ini_get('date.timezone')) {
     //echo 'date.timezone: ' . ini_get('date.timezone');
 }
 
-
 $find_wappapello = get_crest_forecast_wappapello($db);
 echo json_encode($find_wappapello);
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 db_disconnect($db);
 ?>
