@@ -458,14 +458,16 @@ if ($preview == "False") {
     |--------------------------------------------------------------------------
     */
     // Specify the file path where you want to export the data
-    // $filename = "morning_shef.shef";
-    $filename = "morning_shef_test.shef"; // for testing purposes
+    $format = ".shef";
+    $name = "morning_shef_test";
+    // $name = "morning_shef.shef";
+    $file = $name . $format; // for testing purposes
 
     // $filename_date_time = "morning_shef" . $date_Ymd . ".shef";
-    $filename_date_time = "morning_shef_test" . $date_Ymd . ".shef";
+    $filename_date_time = $name . $date_Ymd . "_" . $format;
 
     // Open the file for writing
-    $fileHandle = fopen($filename, 'w');
+    $fileHandle = fopen($file, 'w');
 
     if ($fileHandle === false) {
         echo "Error opening the file.";
@@ -476,11 +478,11 @@ if ($preview == "False") {
         // Close the file handle
         fclose($fileHandle);
 
-        echo "<p><b>Data has been exported to " . $filename . "</b>" . "</p>";
+        echo "<p><b>NWS Shef data has been saved as " . $file . "</b>" . "</p>";
     }
 
     // View Morning Shef
-    echo "<p>" . "<a href='" . $filename . "' target='_blank'>" . "View Morning Shef" . "</a>" . "</p>";
+    echo "<p>" . "<a href='" . $file . "' target='_blank'>" . "View NWS Morning Shef" . "</a>" . "</p>";
 
     // $to = "ivan.h.nguyen@usace.army.mil,allen.phillips@usace.army.mil,DLL-CEMVS-WATER-MANAGERS@usace.army.mil"; // Replace with the recipient's email address
     $to = "ivan.h.nguyen@usace.army.mil";
@@ -502,7 +504,7 @@ if ($preview == "False") {
 
     echo "<br>";
 
-    $filepathname = "/wmdata/DailyOps/morning_shef/" . $filename . "";
+    $filepathname = "/wmdata/DailyOps/morning_shef/" . $file . "";
     $content = $combinedData;
 
     // Save the file
