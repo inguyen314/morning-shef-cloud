@@ -22,15 +22,7 @@ if (ini_get('date.timezone')) {
 
 // Check if the form is submitted and redirected to a new url to process shef data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $userLD24Input = $_POST["ld24_user_input"];
-    $userLD25Input = $_POST["ld25_user_input"];
-    $userMelPriceInput = $_POST["mel_price_user_input"];
-    $userCarlyleInput = $_POST["carlyle_user_input"];
-    $userShelbyvilleInput = $_POST["shelbyville_user_input"];
-    $userMarkTwainInput = $_POST["marktwain_user_input"];
-    $userWappapelloInput = $_POST["wappapello_user_input"];
-    $userRendInput = $_POST["rend_user_input"];
-    redirect_to(('morning_shef_data.php?preview=False&userLD24Input=' . $userLD24Input . '&userLD25Input=' . $userLD25Input . '&userMelPriceInput=' . $userMelPriceInput . '&userCarlyleInput=' . $userCarlyleInput . '&userShelbyvilleInput=' . $userShelbyvilleInput . '&userMarkTwainInput=' . $userMarkTwainInput . '&userWappapelloInput=' . $userWappapelloInput . '&userRendInput=' . $userRendInput . ''));
+    redirect_to(('morning_shef_data.php?preview=False'));
 }
 ?>
 
@@ -87,38 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             style='height: 50px; width: 50px;' alt="Loading..." /></div>
                                     <div id="preview"></div>
                                     <form method="post" target="_blank" onsubmit="hideSubmitButton()">
-                                        <label for="ld24_text_input">: LD24: </label>
-                                        <input type="text" id="ld24_text_input" name="ld24_user_input" value="Nothing to Report">
-                                        <br>
-                                        <br>
-                                        <label for="ld25_text_input">: LD25: </label>
-                                        <input type="text" id="ld25_text_input" name="ld25_user_input" value="Nothing to Report">
-                                        <br>
-                                        <br>
-                                        <label for="mel_price_text_input">: MEL PRICE: </label>
-                                        <input type="text" id="mel_price_text_input" name="mel_price_user_input" value="Nothing to Report">
-                                        <br>
-                                        <br>
-                                        <label for="carlyle_text_input">: CARLYLE: </label>
-                                        <input type="text" id="carlyle_text_input" name="carlyle_user_input" value="Nothing to Report">
-                                        <br>
-                                        <br>
-                                        <label for="shelbyville_text_input">: SHELBYVILLE: </label>
-                                        <input type="text" id="shelbyville_text_input" name="shelbyville_user_input" value="Nothing to Report">
-                                        <br>
-                                        <br>
-                                        <label for="marktwain_text_input">: MARK TWAIN: </label>
-                                        <input type="text" id="marktwain_text_input" name="marktwain_user_input" value="Nothing to Report">
-                                        <br>
-                                        <br>
-                                        <label for="wappapello_text_input">: WAPPAPELLO: </label>
-                                        <input type="text" id="wappapello_text_input" name="wappapello_user_input" value="Nothing to Report">
-                                        <br>
-                                        <br>
-                                        <label for="rend_text_input">: REND: </label>
-                                        <input type="text" id="rend_text_input" name="rend_user_input" value="Nothing to Report">
-                                        <br>
-                                        <br>
                                         <input type="submit" value="Submit" id="submitButton">
                                     </form>
                                     <script src='morning_shef.js'></script>

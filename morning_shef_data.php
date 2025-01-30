@@ -348,18 +348,11 @@ $ld_note_title = ": CEMVS LD NOTES";
 |--------------------------------------------------------------------------
 */
 if ($preview == "True") {
-    // print_r($ld_forecast_title_note);
-    // echo "<br>";
-    // print_r($ld_forecast_title_note_2);
-    // echo "<br>";
-    // echo "<br>";
     print_r($ld_forecast_title_1);
     echo "<br>";
     print_r($ld_tw_forecast_title_1);
     echo "<br>";
     echo "<br>";
-    // print_r($ld_forecast_title_2);
-    // echo "<br>";
     print_r($line_ld24_pool);
     echo "<br>";
     print_r($line_ld24_tw);
@@ -371,21 +364,6 @@ if ($preview == "True") {
     print_r($line_ldmp_pool);
     echo "<br>";
     print_r($line_ldmp_tw);
-    // echo "<br>";
-    // print_r($end);
-    // echo "<br>";
-    // echo "<br>";
-    // print_r($ld_tw_forecast_title_1);
-    // echo "<br>";
-    // print_r($ld_tw_forecast_title_2);
-    // echo "<br>";
-    // print_r($line_ld24_tw);
-    // echo "<br>";
-    // print_r($line_ld25_tw);
-    // echo "<br>";
-    // print_r($line_ldmp_tw);
-    // echo "<br>";
-    // print_r($end);
     echo "<br>";
     echo "<br>";
     echo "<br>";
@@ -443,56 +421,36 @@ if ($preview == "True") {
 */
 if ($preview == "False") {
     // Ld Pool
-    $combinedData = $ld_forecast_title_note;
-    $combinedData .= "\n" . $ld_forecast_title_note_2;
-    $combinedData .= "\n" . $ld_forecast_title_1;
-    // $combinedData .= "\n" . $ld_forecast_title_2;
-    $combinedData .= "\n" . $line_ld24_pool;
-    $combinedData .= "\n" . $line_ld25_pool;
-    $combinedData .= "\n" . $line_ldmp_pool;
-    $combinedData .=  "\n" . $end;
-    $combinedData .= "\n";
-
-    // Ld Tw
+    $combinedData = $ld_forecast_title_1;
     $combinedData .= "\n" . $ld_tw_forecast_title_1;
-    $combinedData .= "\n" . $ld_tw_forecast_title_2;
+    $combinedData .= "\n" . $line_ld24_pool;
     $combinedData .= "\n" . $line_ld24_tw;
-    $combinedData .= "\n" . $line_ld25_tw;
-    $combinedData .= "\n" . $line_ldmp_tw;
-    $combinedData .=  "\n" . $end;
-    $combinedData .= "\n";
-
-    // Ld Notes
-    $combinedData .= "\n" . $ld_note_title;
-    $combinedData .= "\n" . ": LD24: " . $userLD24Input;
-    $combinedData .= "\n" . ": LD25: " . $userLD25Input;
-    $combinedData .= "\n" . ": MEL PRICE: " . $userMelPriceInput;
+    $combinedData .= "\n" . $line_ld25_pool;
+    $combinedData .=  "\n" . $line_ld25_tw;
+    $combinedData .=  "\n" . $line_ldmp_pool;
+    $combinedData .=  "\n" . $line_ldmp_tw;
     $combinedData .= "\n";
 
     // Lakes
     $combinedData .= "\n" . $lake_forecast_title_1;
-    $combinedData .=  "\n" . $lake_forecast_title_2;
+    $combinedData .=  "\n" . $lake_forecast_title_3;
     $combinedData .=  "\n" . $line_carlyle;
+    $combinedData .=  "\n" . $line_carlyle_2;
     $combinedData .=  "\n" . $line_shelbyville;
+    $combinedData .=  "\n" . $line_shelbyville_2;
     $combinedData .=  "\n" . $line_wappapello;
+    $combinedData .=  "\n" . $line_wappapello_2;
     $combinedData .=  "\n" . $line_rend;
-    $combinedData .=  "\n" . $end;
+    $combinedData .=  "\n" . $line_rend_2;
+    $combinedData .= "\n";
 
     // Mark Twain
-    $combinedData .= "\n" . "\n" . $lake_forecast_marktwain_title_1;
+    $combinedData .=  "\n" . $lake_forecast_marktwain_title_1;
+    $combinedData .=  "\n" . $lake_forecast_marktwain_title_2;
+    $combinedData .=  "\n" . $lake_forecast_marktwain_title_3;
     $combinedData .=  "\n" . $lake_forecast_marktwain_forecast;
-    //$combinedData .=  "\n" . $end;
-
-    // Mark Twain Yesterday
-    $combinedData .= "\n" . "\n" . $lake_forecast_marktwain_yesterday_title_1;
+    $combinedData .=  "\n" . $lake_forecast_marktwain_today;
     $combinedData .=  "\n" . $lake_forecast_marktwain_yesterday;
-
-    // Lake Notes
-    $combinedData .= "\n" . "\n" . $lake_note_title;
-    $combinedData .= "\n" . ": CARLYLE: " . $userCarlyleInput . "\n" . ": SHELBYVILLE: " . $userShelbyvilleInput;
-    $combinedData .= "\n" . ": MARK TWAIN: " . $userMarkTwainInput . "\n" . ": WAPPAPELLO: " . $userWappapelloInput;
-    $combinedData .= "\n" . ": REND: " . $userRendInput;
-
 
     /*
     |--------------------------------------------------------------------------
