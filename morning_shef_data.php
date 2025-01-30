@@ -272,7 +272,7 @@ $line_rend_2 = ".ER " . $rend_station_value[0] . " " . $date_plus_one_day . " Z 
 |--------------------------------------------------------------------------
 */
 // Get Mark Twain
-$mark_twain_forecast = get_mark_twain_forecast($db);
+$mark_twain_forecast = get_mark_twain_forecast_no_rounding($db);
 $allOutflowsNotNullMarkTwain = true;
 foreach ($mark_twain_forecast as $forecast) {
     if (is_null($forecast->outflow)) {
@@ -295,6 +295,19 @@ foreach ($mark_twain_forecast as $mark_twain) {
 }
 // Print all outflow values separated by forward slashes
 $line_mark_twain = implode('/', $mark_twain_outflow_values);
+// var_dump($line_mark_twain);
+
+// Split the string into an array
+$values = explode('/', $line_mark_twain);
+
+// Remove the first value
+array_shift($values);
+
+// Reconstruct the string without the first value
+$line_mark_twain_forecast = implode('/', $values);
+
+// Extract the first value
+$line_mark_twain_forecast_today = array_shift($values);
 
 // Get Mark Twain Yesterday
 $marktwain_yesterday_forecast = get_mark_twain_yesterday_forecast($db);
@@ -315,11 +328,14 @@ if ($marktwain_yesterday_forecast->station === 'CDAM7') {
 }
 
 // Get Mark Twain Title
-$lake_forecast_marktwain_title_1 = ": MARK TWAIN FLOW AND 5 DAY FORECAST (6AM DAILY AVERAGE FORECAST VALUE)";
-$lake_forecast_marktwain_title_2  = ".E CDAM7 " . $date_md  . " C DH0000/DC" . $date_md . "0700/QTDF/DID1/" . $line_mark_twain;
+$lake_forecast_marktwain_title_1 = ": 5 DAYS FORECAST (6AM DAILY AVERAGE FORECAST VALUE)";
+$lake_forecast_marktwain_title_2 = ": TODAY (6AM VALUE)";
+$lake_forecast_marktwain_title_3 = ": FLOW YESTERDAY (MIDNIGHT DAILY AVERAGE FORECAST VALUE)";
+$lake_forecast_marktwain_forecast  = ".ER CDAM7 " . $date_plus_one_day  . " Z DH1200/QTDF/DID1/" . $line_mark_twain_forecast;
+$lake_forecast_marktwain_today  = ".ER CDAM7 " . $date_Ymd  . " DH1200/QTD/DID1/" . $line_mark_twain_forecast_today;
 
 $lake_forecast_marktwain_yesterday_title_1 = ": MARK TWAIN LAKE FLOW YESTERDAY (MIDNIGHT DAILY AVERAGE FORECAST VALUE)";
-$lake_forecast_marktwain_yesterday_title_2  = ".E CDAM7 " . $date_md . " C DH0000/DC" . $date_md . "0700/QTD/DID1/" . $line_marktwain_yesterday;
+$lake_forecast_marktwain_yesterday  = ".ER CDAM7 " . $date_Ymd . " Z DH0600/QTD/DID1/" . $line_marktwain_yesterday;
 
 
 // Note Title
@@ -387,8 +403,6 @@ if ($preview == "True") {
     print_r($lake_forecast_title_3);
     echo "<br>";
     echo "<br>";
-    // print_r($lake_forecast_title_2);
-    // echo "<br>";
     print_r($line_carlyle);
     echo "<br>";
     print_r($line_carlyle_2);
@@ -404,21 +418,21 @@ if ($preview == "True") {
     print_r($line_rend);
     echo "<br>";
     print_r($line_rend_2);
-    // echo "<br>";
-    // print_r($end);
     echo "<br>";
     echo "<br>";
     print_r($lake_forecast_marktwain_title_1);
     echo "<br>";
     print_r($lake_forecast_marktwain_title_2);
     echo "<br>";
-    echo "<br>";
-    print_r($lake_forecast_marktwain_yesterday_title_1);
-    echo "<br>";
-    print_r($lake_forecast_marktwain_yesterday_title_2);
+    print_r($lake_forecast_marktwain_title_3);
     echo "<br>";
     echo "<br>";
-    print_r($lake_note_title);
+    print_r($lake_forecast_marktwain_forecast);
+    echo "<br>";
+    print_r($lake_forecast_marktwain_today);
+    echo "<br>";
+    print_r($lake_forecast_marktwain_yesterday);
+    echo "<br>";
     echo "<br>";
 }
 
@@ -466,12 +480,12 @@ if ($preview == "False") {
 
     // Mark Twain
     $combinedData .= "\n" . "\n" . $lake_forecast_marktwain_title_1;
-    $combinedData .=  "\n" . $lake_forecast_marktwain_title_2;
+    $combinedData .=  "\n" . $lake_forecast_marktwain_forecast;
     //$combinedData .=  "\n" . $end;
 
     // Mark Twain Yesterday
     $combinedData .= "\n" . "\n" . $lake_forecast_marktwain_yesterday_title_1;
-    $combinedData .=  "\n" . $lake_forecast_marktwain_yesterday_title_2;
+    $combinedData .=  "\n" . $lake_forecast_marktwain_yesterday;
 
     // Lake Notes
     $combinedData .= "\n" . "\n" . $lake_note_title;
