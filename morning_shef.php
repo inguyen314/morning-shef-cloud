@@ -27,22 +27,22 @@ $preview = $_GET['preview'] ?? null;
 |--------------------------------------------------------------------------
 */
 if ($preview == "True") {
-    print_r($ld_forecast_title_1);
+    print_r($pool_title);
     echo "<br>";
-    print_r($ld_tw_forecast_title_1);
+    print_r($tw_title);
     echo "<br>";
     echo "<br>";
-    print_r($line_ld24_pool);
+    print_r($ld24_pool_data);
     echo "<br>";
-    print_r($line_ld24_tw);
+    print_r($ld24_tw_data);
     echo "<br>";
-    print_r($line_ld25_pool);
+    print_r($ld25_pool_data);
     echo "<br>";
-    print_r($line_ld25_tw);
+    print_r($ld25_tw_data);
     echo "<br>";
-    print_r($line_ldmp_pool);
+    print_r($ldmp_pool_data);
     echo "<br>";
-    print_r($line_ldmp_tw);
+    print_r($ldmp_tw_data);
     echo "<br>";
     echo "<br>";
     echo "<br>";
@@ -52,9 +52,9 @@ if ($preview == "True") {
 | PREVIEW LAKE
 |--------------------------------------------------------------------------
 */
-    print_r($lake_forecast_title_1);
+    print_r($lake_today_title);
     echo "<br>";
-    print_r($lake_forecast_title_3);
+    print_r($lake_forecast_title);
     echo "<br>";
     echo "<br>";
     print_r($line_carlyle);
@@ -97,19 +97,19 @@ if ($preview == "True") {
 */
 if ($preview == "False") {
     // Ld Pool
-    $combinedData = $ld_forecast_title_1;
-    $combinedData .= "\n" . $ld_tw_forecast_title_1;
-    $combinedData .= "\n" . $line_ld24_pool;
-    $combinedData .= "\n" . $line_ld24_tw;
-    $combinedData .= "\n" . $line_ld25_pool;
-    $combinedData .=  "\n" . $line_ld25_tw;
-    $combinedData .=  "\n" . $line_ldmp_pool;
-    $combinedData .=  "\n" . $line_ldmp_tw;
+    $combinedData = $pool_title;
+    $combinedData .= "\n" . $tw_title;
+    $combinedData .= "\n" . $ld24_pool_data;
+    $combinedData .= "\n" . $ld24_tw_data;
+    $combinedData .= "\n" . $ld25_pool_data;
+    $combinedData .=  "\n" . $ld25_tw_data;
+    $combinedData .=  "\n" . $ldmp_pool_data;
+    $combinedData .=  "\n" . $ldmp_tw_data;
     $combinedData .= "\n";
 
     // Lakes
-    $combinedData .= "\n" . $lake_forecast_title_1;
-    $combinedData .=  "\n" . $lake_forecast_title_3;
+    $combinedData .= "\n" . $lake_today_title;
+    $combinedData .=  "\n" . $lake_forecast_title;
     $combinedData .=  "\n" . $line_carlyle;
     $combinedData .=  "\n" . $line_carlyle_2;
     $combinedData .=  "\n" . $line_shelbyville;
