@@ -2,7 +2,7 @@
 <html lang="en">
 
 <?php
-require_once('private/initialize.php');
+require_once('../../php_data_api/private/initialize.php');
 // require_login();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
