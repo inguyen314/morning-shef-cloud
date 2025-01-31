@@ -22,7 +22,7 @@ if (ini_get('date.timezone')) {
 
 // Check if the form is submitted and redirected to a new url to process shef data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    redirect_to(('morning_shef_data.php?preview=False'));
+    redirect_to(('morning_shef.php?preview=False'));
 }
 ?>
 

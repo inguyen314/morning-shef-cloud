@@ -34,7 +34,7 @@ function getPreviewShef() {
     showSpinner();
     var target = document.getElementById("preview");
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'morning_shef_data.php?preview=True', true);
+    xhr.open('GET', 'morning_shef.php?preview=True', true);
     xhr.onreadystatechange = function () {
         // console.log('readyState: ' + xhr.readyState);
         if (xhr.readyState == 4) {
