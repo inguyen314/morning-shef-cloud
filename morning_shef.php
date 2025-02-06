@@ -160,9 +160,9 @@ if ($preview == "False") {
     // View Morning Shef
     echo "<p>" . "<a href='" . $file . "' target='_blank'>" . "View NWS Morning Shef" . "</a>" . "</p>";
 
-    // $to = "ivan.h.nguyen@usace.army.mil,allen.phillips@usace.army.mil,DLL-CEMVS-WATER-MANAGERS@usace.army.mil"; // Replace with the recipient's email address
-    $to = "ivan.h.nguyen@usace.army.mil";
-    $subject = "MVS PHP Morning Shef Sent to NWS" .  " " . $date_Ymd;
+    $to = "ivan.h.nguyen@usace.army.mil,allen.phillips@usace.army.mil,DLL-CEMVS-WATER-MANAGERS@usace.army.mil";
+    // $to = "ivan.h.nguyen@usace.army.mil";
+    $subject = "NWS Morning Shef Sent" .  " " . $date_Ymd;
     $message = $combinedData;
 
     // Additional headers
