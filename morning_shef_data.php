@@ -288,13 +288,17 @@ if ($marktwain_yesterday_forecast->station === 'CDAM7') {
     $line_marktwain_yesterday = number_format($marktwain_yesterday_forecast->value, 2);
 }
 
+// Get Norton Bridge Tw
+$norton_bridge_forecast = get_norton_bridge($db);
+$forecast_value = round($norton_bridge_forecast[0]->value);
+// echo $forecast_value; // Outputs: 37.65
+
 // Get Mark Twain Title
-$lake_forecast_marktwain_title_1 = ": 5 DAYS FORECAST (6AM DAILY AVERAGE FORECAST VALUE)";
-$lake_forecast_marktwain_title_2 = ": TODAY (6AM VALUE)";
-$lake_forecast_marktwain_title_3 = ": FLOW YESTERDAY (MIDNIGHT DAILY AVERAGE FORECAST VALUE)";
+$lake_forecast_marktwain_title_1 = ": 5 DAYS FORECAST (DAILY AVERAGE FORECAST VALUE)";
+$lake_forecast_marktwain_title_2 = ": TODAY (6AM INST FLOW VALUE AT NORTON BRIDGE)";
+$lake_forecast_marktwain_title_3 = ": FLOW YESTERDAY (DAILY AVERAGE MIDNIGHT TO MIDNIGHT)";
 $lake_forecast_marktwain_forecast  = ".ER CDAM7 " . $date_plus_one_day  . " Z DH1200/QTDF/DID1/" . $line_mark_twain_forecast;
-$lake_forecast_marktwain_today  = ".ER CDAM7 " . $date_Ymd  . " DH1200/QTD/DID1/" . $line_mark_twain_forecast_today;
-$lake_forecast_marktwain_yesterday_title_1 = ": MARK TWAIN LAKE FLOW YESTERDAY (MIDNIGHT DAILY AVERAGE FORECAST VALUE)";
+$lake_forecast_marktwain_today  = ".ER CDAM7 " . $date_Ymd  . " Z DH1200/QT/DID1/" . $forecast_value;
 $lake_forecast_marktwain_yesterday  = ".ER CDAM7 " . $date_Ymd . " Z DH0600/QTD/DID1/" . $line_marktwain_yesterday;
 
 // Note Title
