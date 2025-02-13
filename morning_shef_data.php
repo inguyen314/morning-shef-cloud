@@ -265,7 +265,7 @@ $values = explode('/', $line_mark_twain);
 array_shift($values);
 
 // Reconstruct the string without the first value
-$line_mark_twain_forecast = implode('/', $values);
+$line_mark_twain_forecast = implode('/', array_map(fn($v) => $v / 1000, $values));
 
 // Extract the first value
 $line_mark_twain_forecast_today = array_shift($values);
@@ -296,8 +296,8 @@ $forecast_value = number_format($norton_bridge_forecast[0]->value / 1000, 2);
 // echo $forecast_value; // Outputs: 37.65
 
 // Get Mark Twain Title
-$lake_forecast_marktwain_title_1 = ": 5 DAYS FORECAST (DAILY AVERAGE FORECAST VALUE)";
-$lake_forecast_marktwain_title_2 = ": TODAY (6AM INST FLOW VALUE AT NORTON BRIDGE)";
+$lake_forecast_marktwain_title_1 = ": 5 DAYS FORECAST (DAILY AVERAGE FLOW FORECAST VALUE)";
+$lake_forecast_marktwain_title_2 = ": TODAY (6AM INST FLOW (KCFS) VALUE AT NORTON BRIDGE)";
 $lake_forecast_marktwain_title_3 = ": FLOW YESTERDAY (DAILY AVERAGE MIDNIGHT TO MIDNIGHT)";
 $lake_forecast_marktwain_forecast  = ".ER CDAM7 " . $date_plus_one_day  . " Z DH1200/QTDF/DID1/" . $line_mark_twain_forecast;
 $lake_forecast_marktwain_today  = ".ER CDAM7 " . $date_Ymd  . " Z DH1200/QT/DID1/" . $forecast_value;
