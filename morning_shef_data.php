@@ -290,7 +290,9 @@ if ($marktwain_yesterday_forecast->station === 'CDAM7') {
 
 // Get Norton Bridge Tw
 $norton_bridge_forecast = get_norton_bridge($db);
-$forecast_value = round($norton_bridge_forecast[0]->value);
+// var_dump($norton_bridge_forecast);
+$forecast_value = number_format($norton_bridge_forecast[0]->value / 1000, 2);
+// var_dump($forecast_value);
 // echo $forecast_value; // Outputs: 37.65
 
 // Get Mark Twain Title
