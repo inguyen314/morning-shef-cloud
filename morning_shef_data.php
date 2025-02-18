@@ -242,7 +242,7 @@ foreach ($mark_twain_forecast as $forecast) {
     }
 }
 
-if (count($mark_twain_forecast) == 6 && $allOutflowsNotNullMarkTwain) {
+if (count($mark_twain_forecast) >= 6 && $allOutflowsNotNullMarkTwain) {
 } else {
     echo "<p class='monochrome-button-warning'><b>ERROR! Check MarkTwain Lake Sheet</b></p><br>";
 }
