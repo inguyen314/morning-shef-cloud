@@ -261,8 +261,8 @@ $line_mark_twain = implode('/', $mark_twain_outflow_values);
 // Split the string into an array
 $values = explode('/', $line_mark_twain);
 
-// Remove the first value
-array_shift($values);
+array_shift($values); // Remove first value
+array_shift($values); // Remove second value
 
 // Reconstruct the string without the first value
 $line_mark_twain_forecast = implode('/', array_map(fn($v) => $v / 1000, $values));
