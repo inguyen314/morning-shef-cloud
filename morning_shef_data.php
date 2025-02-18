@@ -51,7 +51,7 @@ $ldmp_pool_data = ".ER {$location_ldmp_pool} {$date_plus_one_day} Z DH1200/HPIF/
 |--------------------------------------------------------------------------
 */
 // Set Tw Title
-$tw_title =  ": 5 DAYS TW FORECAST IN STAGE NAVD88 FT AT 6AM";
+$tw_title =  ": 5 DAYS TW FORECAST IN STAGE FT AT 6AM";
 
 // Get Ld24 Tw
 $ld24_tw_forecast = get_ld24_tw($db);
