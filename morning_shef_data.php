@@ -128,6 +128,8 @@ $carlyle_forecast_outflow_values = array_slice($carlyle_outflow_values, 1);
 // Print all outflow values separated by forward slashes
 $line_carlyle = ".ER " . $carlyle_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $carlyle_today_outflow_value;
 $line_carlyle_2 = ".ER " . $carlyle_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $carlyle_forecast_outflow_values);
+
+
 // Get Shelbyville Data
 $shelbyville_forecast = get_shelbyville_forecast($db);
 $allOutflowsNotNullShelbyville = true;
@@ -162,6 +164,8 @@ $shelbyville_forecast_outflow_values = array_slice($shelbyville_outflow_values, 
 $line_shelbyville = ".ER " . $shelbyville_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $shelbyville_today_outflow_value;
 $line_shelbyville_2 = ".ER " . $shelbyville_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $shelbyville_forecast_outflow_values);
 
+
+
 // Get Wappapello
 $wappapello_forecast = get_wappapello_forecast($db);
 $allOutflowsNotNullWappapello = true;
@@ -193,6 +197,9 @@ $wappapello_forecast_outflow_values = array_slice($wappapello_outflow_values, 1)
 // Print all outflow values separated by forward slashes
 $line_wappapello = ".ER " . $wappapello_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $wappapello_today_outflow_value;
 $line_wappapello_2 = ".ER " . $wappapello_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $wappapello_forecast_outflow_values);
+
+
+
 
 // Get Rend
 $rend_forecast = get_rend_forecast($db);
@@ -233,7 +240,7 @@ $line_rend_2 = ".ER " . $rend_station_value[0] . " " . $date_plus_one_day . " Z 
 |--------------------------------------------------------------------------
 */
 // Get Mark Twain
-$mark_twain_forecast = get_mark_twain_forecast_no_rounding($db);
+$mark_twain_forecast = get_mark_twain_forecast_no_rounding_2025($db);
 $allOutflowsNotNullMarkTwain = true;
 foreach ($mark_twain_forecast as $forecast) {
     if (is_null($forecast->outflow)) {
@@ -270,8 +277,12 @@ $line_mark_twain_forecast = implode('/', array_map(fn($v) => $v / 1000, $values)
 // Extract the first value
 $line_mark_twain_forecast_today = array_shift($values);
 
+
+
+
+
 // Get Mark Twain Yesterday
-$marktwain_yesterday_forecast = get_mark_twain_yesterday_forecast($db);
+$marktwain_yesterday_forecast = get_mark_twain_yesterday_forecast_2025($db);
 $allOutflowsNotNullMarkTwainYesterday = true;
 
 if (is_null($marktwain_yesterday_forecast->value)) {
@@ -287,6 +298,10 @@ if ($marktwain_yesterday_forecast->station === 'CDAM7') {
     // Format and print the line
     $line_marktwain_yesterday = number_format($marktwain_yesterday_forecast->value, 2);
 }
+
+
+
+
 
 // Get Norton Bridge Tw
 $norton_bridge_forecast = get_norton_bridge($db);
