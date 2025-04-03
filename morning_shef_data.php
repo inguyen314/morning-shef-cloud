@@ -127,7 +127,7 @@ $carlyle_today_outflow_value = $carlyle_outflow_values[0];
 $carlyle_forecast_outflow_values = array_slice($carlyle_outflow_values, 1);
 // Print all outflow values separated by forward slashes
 $line_carlyle = ".ER " . $carlyle_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $carlyle_today_outflow_value;
-$line_carlyle_2 = ".ER " . $carlyle_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $carlyle_forecast_outflow_values);
+$line_carlyle_2 = ".ER " . $carlyle_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1/" . implode('/', $carlyle_forecast_outflow_values);
 
 
 // Get Shelbyville Data
@@ -162,7 +162,7 @@ $shelbyville_today_outflow_value = $shelbyville_outflow_values[0];
 $shelbyville_forecast_outflow_values = array_slice($shelbyville_outflow_values, 1);
 // Print all outflow values separated by forward slashes
 $line_shelbyville = ".ER " . $shelbyville_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $shelbyville_today_outflow_value;
-$line_shelbyville_2 = ".ER " . $shelbyville_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $shelbyville_forecast_outflow_values);
+$line_shelbyville_2 = ".ER " . $shelbyville_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1/" . implode('/', $shelbyville_forecast_outflow_values);
 
 
 
@@ -196,7 +196,7 @@ $wappapello_today_outflow_value = $wappapello_outflow_values[0];
 $wappapello_forecast_outflow_values = array_slice($wappapello_outflow_values, 1);
 // Print all outflow values separated by forward slashes
 $line_wappapello = ".ER " . $wappapello_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $wappapello_today_outflow_value;
-$line_wappapello_2 = ".ER " . $wappapello_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $wappapello_forecast_outflow_values);
+$line_wappapello_2 = ".ER " . $wappapello_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1/" . implode('/', $wappapello_forecast_outflow_values);
 
 
 
@@ -231,7 +231,7 @@ $rend_today_outflow_value = $rend_outflow_values[0];
 $rend_forecast_outflow_values = array_slice($rend_outflow_values, 1);
 // Print all outflow values separated by forward slashes
 $line_rend = ".ER " . $rend_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $rend_today_outflow_value;
-$line_rend_2 = ".ER " . $rend_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1 " . implode('/', $rend_forecast_outflow_values);
+$line_rend_2 = ".ER " . $rend_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1/" . implode('/', $rend_forecast_outflow_values);
 
 
 /*
