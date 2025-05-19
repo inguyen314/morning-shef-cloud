@@ -1,59 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Setup url parameters -->
+
 <script>
-    // Create a URL object with the current page URL
     const urlParams = new URLSearchParams(window.location.search);
 
     var office = urlParams.get('office') || 'MVS';
     console.log('office: ', office);
 
-    // Calculate the document root
-    const documentRoot = window.location.protocol + "//" + window.location.host + "/";
-
-    // Determine the default value of cda based on documentRoot
-    const cdaDefault = (documentRoot === `https://wm.${office.toLocaleLowerCase()}.ds.usace.army.mil/`) ? "internal" : "public";
-    // console.log("cdaDefault: ", cdaDefault);
-
-    // Get the value of a specific parameter
-    var cda = urlParams.get('cda') || cdaDefault;
+    var cda = urlParams.get('cda');
     console.log('cda: ', cda);
+
+    const documentRoot = window.location.protocol + "//" + window.location.host + "/";
+    console.log("documentRoot: ", documentRoot);
+
+    if (documentRoot === `https://wm.${office.toLocaleLowerCase()}.ds.usace.army.mil/` || `http://localhost:5173/` || `https://wm.rsgis.dev/` || `https://wm-${office.toLocaleLowerCase()}coop.mvk.ds.usace.army.mil/`) {
+        cdaDefault = "internal";
+    } else if (documentRoot === `https://wm-${office.toLocaleLowerCase()}coop.mvk.ds.usace.army.mil/`) {
+        cdaDefault = "internal-coop";
+    } else {
+        cdaDefault = "public";
+    }
+    console.log("cdaDefault: ", cdaDefault);
+
+    if (cda === null) {
+        cda = cdaDefault;
+    }
+    console.log("cda: ", cda);
+
+    function formatDate(date) {
+        let month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure two-digit month
+        let day = String(date.getDate()).padStart(2, '0'); // Ensure two-digit day
+        let year = date.getFullYear();
+        return `${month}-${day}-${year}`;
+    }
+
+    function parseDate(str) {
+        // Assumes format MM-DD-YYYY
+        let [month, day, year] = str.split('-');
+        return new Date(Number(year), Number(month) - 1, Number(day)); // Local time, no ambiguity
+    }
 
     var type = urlParams.get('type') || null;
     console.log('type: ', type);
 
-    var type_flow = urlParams.get('type_flow');
-    console.log('type_flow: ', type_flow);
+    var lake = urlParams.get('lake');
+    console.log('lake: ', lake);
 
-    var basin = urlParams.get('basin') || null;
-    console.log('basin: ', basin);
+    var datetime = urlParams.get('datetime') || formatDate(new Date());
+    console.log('datetime: ', datetime);
 
-    var gage = urlParams.get('gage') || null;
-    console.log('gage: ', gage);
+    var baseDate = parseDate(datetime);
 
-    var gage_2 = urlParams.get('gage_2') || null;
-    console.log('gage_2: ', gage_2);
+    var nextDay = urlParams.get('nextDay') || formatDate(new Date(baseDate.getTime() + 86400000));
+    console.log('nextDay:', nextDay);
 
-    var begin = urlParams.get('begin') || null;
-    console.log('begin: ', begin);
+    var prevDay = urlParams.get('prevDay') || formatDate(new Date(baseDate.getTime() - 86400000));
+    console.log('prevDay:', prevDay);
 
-    var end = urlParams.get('end') || null;
-    console.log('end: ', end);
-
-    var begin_2 = urlParams.get('begin_2') || null;
-    console.log('begin_2: ', begin_2);
-
-    var end_2 = urlParams.get('end_2') || null;
-    console.log('end_2: ', end_2);
-
-    var top10 = urlParams.get('top10') || null;
-    console.log('top10: ', top10);
-
-    var version_id = urlParams.get('version_id') || null;
-    console.log('version_id: ', version_id);
-
-    var template_id = urlParams.get('template_id') || null;
-    console.log('template_id: ', template_id);
+    var lookback = urlParams.get('lookback');
+    console.log('lookback: ', lookback);
 </script>
 
 <head>
@@ -68,10 +73,10 @@
     <link rel="stylesheet" href="css/sidebar.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/main.js"></script>
-    <script src="js/moment.min.js"></script>
-    <script src="js/moment-timezone-with-data.js"></script>
-    <script src="js/chart.js"></script>
-    <script src="js/chartjs-adapter-moment.min.js"></script>
+    <script src="js/libraries/moment.min.js"></script>
+    <script src="js/libraries/moment-timezone-with-data.js"></script>
+    <script src="js/libraries/chart.js"></script>
+    <script src="js/libraries/chartjs-adapter-moment.min.js"></script>
 </head>
 
 <body>
@@ -93,11 +98,11 @@
                             </h2>
                             <div class="box-content" style="background-color:white;margin:auto">
                                 <div class="content">
-                                    <div id="loading_shef" style="display: none;"><img
+                                    <div id="loading" style="display: none;"><img
                                             src="images/loading4.gif"
                                             style='height: 50px; width: 50px;' alt="Loading..." /></div>
-                                    <div id="table_container_shef"></div>
-                                    <script src='shef.js'></script>
+                                    <div id="table_container"></div>
+                                    <script src='js/morning_shef.js'></script>
                                 </div>
                             </div>
                         </div>
