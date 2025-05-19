@@ -107,31 +107,39 @@ document.addEventListener('DOMContentLoaded', async function () {
                 else if (lake === "Wappapello Lk-St Francis") urltsid2 = `${setBaseUrl}timeseries/group/Flow?office=${office}&category-id=Iron Bridge-St Francis`;
                 else if (lake === "Mark Twain Lk-Salt") urltsid2 = `${setBaseUrl}timeseries/group/Flow?office=${office}&category-id=Norton Bridge-Salt`;
 
-                const [response1, response2] = await Promise.all([
-                    fetch(urltsid1),
-                    fetch(urltsid2)
-                ]);
+                const urltsid3 = (lake === "Mark Twain Lk-Salt")
+                    ? `${setBaseUrl}timeseries/group/Turbines-Lake-Test?office=${office}&category-id=${lake}`
+                    : null;
 
-                const tsidData1 = await response1.json();
-                const tsidData2 = await response2.json();
+                const fetchPromises = [fetch(urltsid1), fetch(urltsid2)];
+                if (urltsid3) fetchPromises.push(fetch(urltsid3));
+
+                const responses = await Promise.all(fetchPromises);
+
+                const tsidData1 = await responses[0].json();
+                const tsidData2 = await responses[1].json();
+                const tsidData3 = urltsid3 ? await responses[2].json() : null;
 
                 const tsid1 = tsidData1['assigned-time-series'][0]['timeseries-id'];
                 const tsid2 = tsidData2['assigned-time-series'][0]['timeseries-id'];
+                const tsid3 = tsidData3 ? tsidData3['assigned-time-series'][0]['timeseries-id'] : null;
 
                 const timeSeriesData1 = await fetchTimeSeriesVersionedData(tsid1);
                 const timeSeriesData2 = await fetchTimeSeriesData(tsid2);
+                const timeSeriesData3 = tsid3 ? await fetchTimeSeriesData(tsid3) : null;
 
                 allLakeData.push({
                     lake,
                     timeSeriesData1,
-                    timeSeriesData2
+                    timeSeriesData2,
+                    timeSeriesData3
                 });
             } catch (error) {
                 console.error(`Error fetching data for ${lake}:`, error);
             }
         }
 
-        createTable(allLakeData); // pass array of lake data
+        createTable(allLakeData);
     };
 
     fetchAllLakeData(lakeLocs);
@@ -184,11 +192,13 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         let allLakesText = "";
 
-        lakeDataArray.forEach(({ lake, timeSeriesData1, timeSeriesData2 }) => {
+        lakeDataArray.forEach(({ lake, timeSeriesData1, timeSeriesData2, timeSeriesData3 }) => {
             if (!timeSeriesData2 || !timeSeriesData2.values) {
                 allLakesText += `<strong>${lake}</strong><br>No data available.<br><br>`;
                 return;
             }
+
+            console.log("timeSeriesData3:", timeSeriesData3);
 
             const formattedForecastDataArray = timeSeriesData1.values.map(entry => {
                 const timestamp = Number(entry[0]);
@@ -197,6 +207,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     formattedTimestampCST: convertUnixTimestamp(timestamp, true),
                 };
             });
+            console.log("formattedForecastDataArray:", formattedForecastDataArray);
 
             const formattedStageDataArray = timeSeriesData2.values.map(entry => {
                 const timestamp = Number(entry[0]);
@@ -235,10 +246,25 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             const forecastText = `ER ${nwsCode} ${formattedDate} Z DH1200/QTIF/DID1/${forecastValues}`;
 
+            const flowYesterdayTurbine = (
+                timeSeriesData3 &&
+                Array.isArray(timeSeriesData3.values) &&
+                timeSeriesData3.values.length > 0 &&
+                Array.isArray(timeSeriesData3.values[0]) &&
+                timeSeriesData3.values[0].length > 1
+            ) ? timeSeriesData3.values[0][1] : null;
+
+            console.log("flowYesterdayTurbine:", flowYesterdayTurbine);
+
+            let turbineText = "";
+            if (lake === "Mark Twain Lk-Salt") {
+                turbineText = `ER ${nwsCode} ${formattedDate} Z DH1200/QTD/DID1/${flowYesterdayTurbine}`;
+            }
+
             if (sixAmData) {
                 const value = (Math.round((Number(sixAmData[1]) / 1000) * 10) / 10).toFixed(2);
 
-                allLakesText += `<strong>:${lake} (Today's lake flow 6am instantaneous value)</strong><br>.ER ${nwsCode} ${formattedDate} Z DH1200/QT/DID1/${value}<br>${forecastText}<br><br>`;
+                allLakesText += `<strong>:${lake} (Today's lake flow 6am instantaneous value)</strong><br>.ER ${nwsCode} ${formattedDate} Z DH1200/QT/DID1/<span title='${timeSeriesData2['name']}'>${value}</span><br>${forecastText}<br>${turbineText}<br><br>`;
             } else {
                 allLakesText += `<strong>:${lake}</strong><br>No 6 AM CST data available.<br><br>`;
             }
