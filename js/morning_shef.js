@@ -189,8 +189,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     function createTable(lakeDataArray) {
         const outputDiv = document.getElementById("table_container");
         outputDiv.innerHTML = "";
+        const savePromises = [];
 
-        let allLakesText = "";
+        let displayText = "";
+        let plainText = "";
 
         lakeDataArray.forEach(({ lake, timeSeriesData1, timeSeriesData2, timeSeriesData3 }) => {
             if (!timeSeriesData2 || !timeSeriesData2.values) {
@@ -273,13 +275,53 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (sixAmFlowData) {
                 const value = (Math.round((Number(sixAmFlowData[1]) / 1000) * 10) / 10).toFixed(2);
 
-                allLakesText += `<strong>:${lake} (Today's lake flow 6am instantaneous value)</strong><br>.ER ${nwsCode} ${formattedFlowDate} Z DH1200/QT/DID1/<span title='${timeSeriesData2['name']}'>${value}</span><br>${forecastText}<br>${turbineText}<br><br>`;
+                plainText += `:${lake} (Today's lake flow 6am instantaneous value)\n.ER ${nwsCode} ${formattedFlowDate} Z DH1200/QT/DID1/${value}\n${forecastText}\n${turbineText}\n\n`;
+
+                displayText += `<strong>:${lake} (Today's lake flow 6am instantaneous value)</strong><br>.ER ${nwsCode} ${formattedFlowDate} Z DH1200/QT/DID1/<span title='${timeSeriesData2['name']}'>${value}</span><br>${forecastText}<br>${turbineText}<br><br>`;
             } else {
-                allLakesText += `<strong>:${lake}</strong><br>No 6 AM CST data available.<br><br>`;
+                displayText += `<strong>:${lake}</strong><br>No 6 AM CST data available.<br><br>`;
             }
+
+            // Save to BLOB and show feedback
+            // NOTE: https://cwms-data.usace.army.mil/cwms-data/blobs/MORNING_SHEF.TXT?office=MVS
+            // curl -O https://cwms-data.usace.army.mil/cwms-data/blobs/MORNING_SHEF.TXT?office=MVS
+            const savePromise = fetch(`${setBaseUrl.replace(":8243", "")}blobs?fail-if-exists=false`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;version=2",
+                    "cache-control": "no-cache",
+                },
+                body: JSON.stringify({
+                    "office-id": office,
+                    "media-type-id": "application/octet-stream",
+                    "id": "MORNING_SHEF.TXT",
+                    "description": `Updated ${moment().format()}`,
+                    "value": btoa(plainText),
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        outputDiv.innerHTML += `<div style="color: green;">Saved for ${lake}</div>`;
+                    } else {
+                        return response.text().then(text => {
+                            throw new Error(`Save failed for ${lake}: ${response.status} - ${text}`);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Save error:", error);
+                    outputDiv.innerHTML += `<div style="color: red;">Failed to save for ${lake}</div>`;
+                });
+
+            savePromises.push(savePromise);
         });
 
-        outputDiv.innerHTML = allLakesText;
+        // Append "Good job!" after all lakes are saved
+        Promise.all(savePromises).finally(() => {
+            outputDiv.innerHTML += `<div style="color: blue; margin-top: 10px;"><strong>https://cwms-data.usace.army.mil/cwms-data/blobs/MORNING_SHEF.TXT?office=MVS</strong></div>`;
+        });
+
+        outputDiv.innerHTML = displayText;
     }
 });
 
