@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <form method="post" target="_blank" onsubmit="hideSubmitButton()">
                                         <input type="submit" value="Submit" id="submitButton">
                                     </form>
-                                    <script src='morning_shef.js'></script>
+                                    <script src='morning_shef_php.js'></script>
                                 </div>
                             </div>
                         </div>
