@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     console.log("lakeLocs:", lakeLocs);
 
     const fetchTimeSeriesVersionedData = async (tsid) => {
-        const tsidData = `${setBaseUrl}timeseries?name=${tsid}&begin=${isoDateMinus2Days}&end=${isoDateDay7}&office=${office}&version-date=${convertTo6AMCST(isoDateMinus1Day)}`; // use isoDateToday
+        const tsidData = `${setBaseUrl}timeseries?name=${tsid}&begin=${isoDateMinus2Days}&end=${isoDateDay7}&office=${office}&version-date=${convertTo6AMCST(isoDateToday)}`; // use isoDateToday
         console.log('tsidData:', tsidData);
         try {
             const response = await fetch(tsidData, {
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             });
             console.log("formattedForecastDataArray:", formattedForecastDataArray);
 
-            const formattedStageDataArray = timeSeriesData2.values.map(entry => {
+            const formattedFlowDataArray = timeSeriesData2.values.map(entry => {
                 const timestamp = Number(entry[0]);
                 return {
                     ...entry,
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 };
             });
 
-            const sixAmData = formattedStageDataArray.find(entry => {
+            const sixAmFlowData = formattedFlowDataArray.find(entry => {
                 const date = new Date(entry.formattedTimestampCST);
                 return date.getHours() === 6 && date.getMinutes() === 0;
             });
@@ -229,13 +229,13 @@ document.addEventListener('DOMContentLoaded', async function () {
             else if (lake === "Wappapello Lk-St Francis") nwsCode = "WPPM7";
             else if (lake === "Mark Twain Lk-Salt") nwsCode = "CDAM7";
 
-            let formattedDate = "NO_DATE";
-            if (sixAmData) {
-                const dateObj = new Date(sixAmData.formattedTimestampCST);
+            let formattedFlowDate = "NO_DATE";
+            if (sixAmFlowData) {
+                const dateObj = new Date(sixAmFlowData.formattedTimestampCST);
                 const year = dateObj.getFullYear();
                 const month = String(dateObj.getMonth() + 1).padStart(2, '0');
                 const day = String(dateObj.getDate()).padStart(2, '0');
-                formattedDate = `${year}${month}${day}`;
+                formattedFlowDate = `${year}${month}${day}`;
             }
 
             const forecastValues = formattedForecastDataArray.map(entry => {
@@ -244,7 +244,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 return roundedValue.toFixed(1);
             }).join(', ');
 
-            const forecastText = `ER ${nwsCode} ${formattedDate} Z DH1200/QTIF/DID1/${forecastValues}`;
+            let forecastText = "";
+            if (forecastValues) {
+                forecastText = `.ER ${nwsCode} ${formattedFlowDate} Z DH1200/QTIF/DID1/${forecastValues}`;
+            } else {
+                forecastText = `.ER ${nwsCode} ${formattedFlowDate} Z DH1200/QTIF/DID1/No data available`;
+            }
 
             const flowYesterdayTurbine = (
                 timeSeriesData3 &&
@@ -258,13 +263,17 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             let turbineText = "";
             if (lake === "Mark Twain Lk-Salt") {
-                turbineText = `ER ${nwsCode} ${formattedDate} Z DH1200/QTD/DID1/${flowYesterdayTurbine}`;
+                if (flowYesterdayTurbine) {
+                    turbineText = `.ER ${nwsCode} ${formattedFlowDate} Z DH1200/QTD/DID1/${flowYesterdayTurbine}`;
+                } else {
+                    turbineText = `.ER ${nwsCode} ${formattedFlowDate} Z DH1200/QTD/DID1/No data available`;
+                }
             }
 
-            if (sixAmData) {
-                const value = (Math.round((Number(sixAmData[1]) / 1000) * 10) / 10).toFixed(2);
+            if (sixAmFlowData) {
+                const value = (Math.round((Number(sixAmFlowData[1]) / 1000) * 10) / 10).toFixed(2);
 
-                allLakesText += `<strong>:${lake} (Today's lake flow 6am instantaneous value)</strong><br>.ER ${nwsCode} ${formattedDate} Z DH1200/QT/DID1/<span title='${timeSeriesData2['name']}'>${value}</span><br>${forecastText}<br>${turbineText}<br><br>`;
+                allLakesText += `<strong>:${lake} (Today's lake flow 6am instantaneous value)</strong><br>.ER ${nwsCode} ${formattedFlowDate} Z DH1200/QT/DID1/<span title='${timeSeriesData2['name']}'>${value}</span><br>${forecastText}<br>${turbineText}<br><br>`;
             } else {
                 allLakesText += `<strong>:${lake}</strong><br>No 6 AM CST data available.<br><br>`;
             }
