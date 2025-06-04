@@ -93,6 +93,32 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     };
 
+    const fetchTimeSeriesTurbData = async (tsid) => {
+        // Convert to Date object
+        const date = new Date(isoDateMinus1Day);
+
+        // Add 1 hour (60 minutes * 60 seconds * 1000 milliseconds)
+        date.setTime(date.getTime() + (1 * 60 * 60 * 1000));
+
+        // Convert back to ISO string (preserve UTC format)
+        const begin = date.toISOString();
+
+        const tsidData = `${setBaseUrl}timeseries?name=${tsid}&begin=${begin}&end=${isoDateToday}&office=${office}`; // use isoDateToday
+        console.log('tsidData:', tsidData);
+        try {
+            const response = await fetch(tsidData, {
+                headers: {
+                    "Accept": "application/json;version=2",
+                    "cache-control": "no-cache"
+                }
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching time series data:", error);
+        }
+    };
+
     const fetchAllLakeData = async (lakes) => {
         const allLakeData = [];
 
@@ -126,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 const timeSeriesData1 = await fetchTimeSeriesVersionedData(tsid1);
                 const timeSeriesData2 = await fetchTimeSeriesData(tsid2);
-                const timeSeriesData3 = tsid3 ? await fetchTimeSeriesData(tsid3) : null;
+                const timeSeriesData3 = tsid3 ? await fetchTimeSeriesTurbData(tsid3) : null;
 
                 allLakeData.push({
                     lake,
@@ -265,7 +291,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             let turbineText = "";
             if (lake === "Mark Twain Lk-Salt") {
-                if (flowYesterdayTurbine) {
+                if (flowYesterdayTurbine !== null) {
                     turbineText = `.ER ${nwsCode} ${formattedFlowDate} Z DH1200/QTD/DID1/${flowYesterdayTurbine}`;
                 } else {
                     turbineText = `.ER ${nwsCode} ${formattedFlowDate} Z DH1200/QTD/DID1/No data available`;
