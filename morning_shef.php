@@ -27,6 +27,8 @@ $preview = $_GET['preview'] ?? null;
 |--------------------------------------------------------------------------
 */
 if ($preview == "True") {
+    print_r($gen_date);
+    echo "<br>";
     print_r($pool_title);
     echo "<br>";
     print_r($tw_title);
@@ -97,7 +99,8 @@ if ($preview == "True") {
 */
 if ($preview == "False") {
     // Ld Pool
-    $combinedData = $pool_title;
+    $combinedData = $gen_date;
+    $combinedData .= "\n" . $pool_title;
     $combinedData .= "\n" . $tw_title;
     $combinedData .= "\n" . $ld24_pool_data;
     $combinedData .= "\n" . $ld24_tw_data;
@@ -207,7 +210,4 @@ if ($preview == "False") {
     echo "View NWS Morning Shef on Public Web Link as Text File";
     echo "</a>";
     echo "</p>";
-
-    // Cron
-    echo "<p>cronjob push morning shef to public web every hour, /wm/mvs/wm_web/var/apache2/2.4/htdocs/bin/morning_shef.sh</p>";
 }

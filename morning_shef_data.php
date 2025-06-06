@@ -11,6 +11,14 @@ $date_plus_one_day = date('Ymd', strtotime('+1 day'));
 
 /*
 |--------------------------------------------------------------------------
+| GENERAL SHEF DATA DATE
+|--------------------------------------------------------------------------
+*/
+
+$gen_date =": Generation Date " . date('Ymd');
+
+/*
+|--------------------------------------------------------------------------
 | GET POOL DATA
 |--------------------------------------------------------------------------
 */
@@ -96,7 +104,9 @@ $lake_today_title = ": TODAYS LAKE FLOW (6AM INSTANTANEOUS VALUE)";
 $lake_forecast_title = ": 5 DAYS LAKE FORECAST (6AM INSTANTANEOUS FORECAST VALUE)";
 $lake_forecast_title_2  = ".B STL " . $date_md . " C DH0600/DC" . $date_md . "0700/QT/DRD+1/QTIF/DRD+2/QTIF/DRD+3/QTIF/DRD+4/QTIF/DRD+5/QTIF";
 
+// =============================================
 // Get Carlyle Data
+// =============================================
 $carlyle_forecast = get_carlyle_forecast($db);
 $allOutflowsNotNullCarlyle = true;
 
@@ -129,8 +139,9 @@ $carlyle_forecast_outflow_values = array_slice($carlyle_outflow_values, 1);
 $line_carlyle = ".ER " . $carlyle_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $carlyle_today_outflow_value;
 $line_carlyle_2 = ".ER " . $carlyle_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1/" . implode('/', $carlyle_forecast_outflow_values);
 
-
+// =============================================
 // Get Shelbyville Data
+// =============================================
 $shelbyville_forecast = get_shelbyville_forecast($db);
 $allOutflowsNotNullShelbyville = true;
 
@@ -149,7 +160,6 @@ if (count($shelbyville_forecast) == 6 && $allOutflowsNotNullShelbyville) {
     echo "<p class='monochrome-button-warning'><b>ERROR! Check Shelbyville Lake Sheet</b></p><br>";
 }
 
-
 foreach ($shelbyville_forecast as $shelbyville) {
     if ($shelbyville->station === 'SBYI2') {
         $shelbyville_outflow_values[] = $shelbyville->outflow;
@@ -164,9 +174,9 @@ $shelbyville_forecast_outflow_values = array_slice($shelbyville_outflow_values, 
 $line_shelbyville = ".ER " . $shelbyville_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $shelbyville_today_outflow_value;
 $line_shelbyville_2 = ".ER " . $shelbyville_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1/" . implode('/', $shelbyville_forecast_outflow_values);
 
-
-
+// =============================================
 // Get Wappapello
+// =============================================
 $wappapello_forecast = get_wappapello_forecast($db);
 $allOutflowsNotNullWappapello = true;
 
@@ -198,10 +208,9 @@ $wappapello_forecast_outflow_values = array_slice($wappapello_outflow_values, 1)
 $line_wappapello = ".ER " . $wappapello_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $wappapello_today_outflow_value;
 $line_wappapello_2 = ".ER " . $wappapello_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1/" . implode('/', $wappapello_forecast_outflow_values);
 
-
-
-
+// =============================================
 // Get Rend
+// =============================================
 $rend_forecast = get_rend_forecast($db);
 $allOutflowsNotNullRend = true;
 
@@ -232,7 +241,6 @@ $rend_forecast_outflow_values = array_slice($rend_outflow_values, 1);
 // Print all outflow values separated by forward slashes
 $line_rend = ".ER " . $rend_station_value[0] . " " . $date_Ymd . " Z DH1200/QT/DID1/" . $rend_today_outflow_value;
 $line_rend_2 = ".ER " . $rend_station_value[0] . " " . $date_plus_one_day . " Z DH1200/QTIF/DID1/" . implode('/', $rend_forecast_outflow_values);
-
 
 /*
 |--------------------------------------------------------------------------
@@ -277,10 +285,6 @@ $line_mark_twain_forecast = implode('/', array_map(fn($v) => $v / 1000, $values)
 // Extract the first value
 $line_mark_twain_forecast_today = array_shift($values);
 
-
-
-
-
 // Get Mark Twain Yesterday
 $marktwain_yesterday_forecast = get_mark_twain_yesterday_forecast_2025($db);
 $allOutflowsNotNullMarkTwainYesterday = true;
@@ -298,10 +302,6 @@ if ($marktwain_yesterday_forecast->station === 'CDAM7') {
     // Format and print the line
     $line_marktwain_yesterday = number_format($marktwain_yesterday_forecast->value, 2);
 }
-
-
-
-
 
 // Get Norton Bridge Tw
 $norton_bridge_forecast = get_norton_bridge($db);
